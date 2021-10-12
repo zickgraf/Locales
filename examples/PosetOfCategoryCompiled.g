@@ -63,11 +63,47 @@ IJJsJ := StableInternalHom( J, IJJ );
 #! <A morphism in Rows( Q[x,y] )>
 IJJsJ = I;
 
-#I-J;
+I-J;
 #(I-J)+J;
-#AsMutipleDifference( I-J ) + J;
+#AsMultipleDifference( I-J ) + J;
 
 #(I-J) + J * J = I;
+#IsEqualForObjects( (I-J) + J * J, I + 0);
+
+
+
+cat := CapCategory( I + 0 );
+
+package_name := "Locales";
+compiled_category_name := "BooleanAlgebraOfConstructibleObjectsAsUnionOfDifferencesOfPosetOfSliceCategoryOverTensorUnitOfCategoryOfRows";
+category_constructor := function( R )
+  local F, S, P, L;
+    
+    F := CategoryOfRows( R : FinalizeCategory := true );
+    S := SliceCategoryOverTensorUnit( F : FinalizeCategory := true );
+    P := PosetOfCategory( S : FinalizeCategory := true );
+    L := BooleanAlgebraOfConstructibleObjectsAsUnionOfDifferences( P );
+    
+    return L;
+    
+end;
+
+operations := "IsEqualForObjects";
+given_arguments := [ R ];
+
+CapJitPrecompileCategoryAndCompareResult(
+    category_constructor,
+    given_arguments,
+    package_name,
+    compiled_category_name :
+    operations := operations
+);;
+
+
+#compiled_func := CapJitCompiledFunction( Last( cat!.added_functions.IsEqualForObjects )[1], [ cat ] );
+#Display(compiled_func);
+
+#IsEqualForObjects( (I-J) + J * J, I + 0);
 
 #! true
 #! @EndExample
