@@ -184,6 +184,15 @@ InstallMethod( CanonicalObject,
     
 end );
 
+BindGlobal( "CanonicalObject_for_IsConstructibleObject_with_cat", function( cat, A )
+  local list;
+    
+    list := [ CanonicalObjectOp( A[1] ), A{[ 2 .. Length( A ) ]} ];
+    Error("asd");
+    return Iterated( list, function( C, D ) return CanonicalObjectOp( C + D ); end );
+    
+end );
+
 ##
 InstallMethod( FactorizeObject,
         "for a constructible object",
